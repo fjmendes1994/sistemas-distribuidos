@@ -1,0 +1,8 @@
+# InteliJ Idea
+.idea
+
+# Java class
+*.class
+
+# Out
+/out
