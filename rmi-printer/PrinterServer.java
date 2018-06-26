@@ -4,7 +4,7 @@ public class PrinterServer {
     PrinterServer() {
         try {
             PrinterManagerImple printerManager = new PrinterManagerImple();
-            Naming.rebind("rmi://127.0.0.1:1099/PrintService", printerManager);
+            Naming.rebind("rmi://127.0.0.1:2443/PrintService", printerManager);
         } catch (Exception e) {
             e.printStackTrace();
         }

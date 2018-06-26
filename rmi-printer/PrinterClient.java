@@ -11,7 +11,7 @@ public class PrinterClient {
 
     public static void main(String[] args) {
         try {
-            PrinterManager printerManger = (PrinterManager) Naming.lookup("rmi://127.0.0.1:1099/PrintService");
+            PrinterManager printerManger = (PrinterManager) Naming.lookup("rmi://54.172.102.230:2443/PrintService");
             PrintJob printJob;
             for (int i = 0; i < 10; i++) {
                 printJob = new PrintJob("Conteudo a ser impresso...", i, ProcessHandle.current().pid());
