@@ -6,7 +6,7 @@ build:
 
 start-rmi:
 	rmic PrinterManagerImple
-	rmiregistry &
+	rmiregistry 2443 &
 
 run-server:
 	java PrinterServer
