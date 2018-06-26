@@ -9,10 +9,10 @@ start-rmi:
 	rmiregistry 2443 &
 
 run-server:
-	java PrinterServer
+	java -Djava.security.policy="security.policy" PrinterServer
 
 run-client:
-	java PrinterClient
+	java -Djava.security.policy="security.policy" PrinterClient
 
 run-clients: run-client-01 run-client-02 run-client-03 run-client-04 run-client-05
 

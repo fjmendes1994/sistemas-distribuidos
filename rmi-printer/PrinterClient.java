@@ -11,6 +11,9 @@ public class PrinterClient {
 
     public static void main(String[] args) {
         try {
+            if(System.getSecurityManager() == null){
+                System.setSecurityManager(new SecurityManager());
+            }
             PrinterManager printerManger = (PrinterManager) Naming.lookup("rmi://54.172.102.230:2443/PrintService");
             PrintJob printJob;
             for (int i = 0; i < 10; i++) {
