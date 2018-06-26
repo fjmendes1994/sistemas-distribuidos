@@ -7,7 +7,7 @@ public class PrinterServer {
                 System.setSecurityManager(new SecurityManager());
             }
             PrinterManagerImple printerManager = new PrinterManagerImple();
-            Naming.rebind("rmi://127.0.0.1:2443/PrintService", printerManager);
+            Naming.rebind("rmi://ip-172-31-31-120.ec2.internal:2443/PrintService", printerManager);
         } catch (Exception e) {
             e.printStackTrace();
         }

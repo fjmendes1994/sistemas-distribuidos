@@ -14,7 +14,7 @@ public class PrinterClient {
             if(System.getSecurityManager() == null){
                 System.setSecurityManager(new SecurityManager());
             }
-            PrinterManager printerManger = (PrinterManager) Naming.lookup("rmi://54.172.102.230:2443/PrintService");
+            PrinterManager printerManger = (PrinterManager) Naming.lookup("rmi://ec2-54-172-102-230.compute-1.amazonaws.com:2443/PrintService");
             PrintJob printJob;
             for (int i = 0; i < 10; i++) {
                 printJob = new PrintJob("Conteudo a ser impresso...", i, ProcessHandle.current().pid());
