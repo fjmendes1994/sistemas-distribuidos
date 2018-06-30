@@ -8,11 +8,11 @@ public class PrinterServer {
             if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new SecurityManager());
             }
-            PrinterManagerImple printerManager = new PrinterManagerImple();
-            System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+            PrinterManager printerManager = new PrinterManagerImple();
+            System.setProperty("java.rmi.server.hostname", "ip-172-31-31-120.ec2.internal");
 
             Registry registry = LocateRegistry.createRegistry(2443);
-            registry.rebind("PrintService", printerManager);
+            registry.rebind("print_service", printerManager);
         } catch (Exception e) {
             e.printStackTrace();
         }
