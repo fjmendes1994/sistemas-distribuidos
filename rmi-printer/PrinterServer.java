@@ -1,4 +1,6 @@
 import java.rmi.Naming;
+import java.rmi.registry.Registry;
+import java.rmi.registry.LocateRegistry;
 
 public class PrinterServer {
     PrinterServer() {
@@ -7,7 +9,10 @@ public class PrinterServer {
                 System.setSecurityManager(new SecurityManager());
             }
             PrinterManagerImple printerManager = new PrinterManagerImple();
-            Naming.rebind("rmi://ip-172-31-31-120.ec2.internal:2443/PrintService", printerManager);
+            System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+
+            Registry registry = LocateRegistry.createRegistry(2443);
+            registry.rebind("PrintService", printerManager);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -17,4 +22,4 @@ public class PrinterServer {
         new PrinterServer();
     }
 
-} 
+}
