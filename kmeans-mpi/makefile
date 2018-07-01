@@ -4,7 +4,7 @@ build:
 	mpicc kmeans-mpi.c -o kmeans
 
 run-2:
-	mpirun --allow-run-as-root -np 2 kmeans
+	mpirun --allow-run-as-root -n 2 -host master,node001 ./kmeans
 
 run-4:
 	mpirun --allow-run-as-root -np 4 kmeans
