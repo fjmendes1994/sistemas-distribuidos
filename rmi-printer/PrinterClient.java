@@ -17,7 +17,7 @@ public class PrinterClient {
             if(System.getSecurityManager() == null){
                 System.setSecurityManager(new SecurityManager());
             }
-            String serverIP = "54.172.102.230"; // or localhost if client and server on same machine.
+            String serverIP = "34.239.245.237"; // or localhost if client and server on same machine.
             int serverPort = 2443;
             Registry registry = LocateRegistry.getRegistry(serverIP, serverPort);
             System.out.println("Achei o Registry");
