@@ -1,6 +1,7 @@
 import java.rmi.Naming;
 import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 
 public class PrinterServer {
     PrinterServer() {
@@ -9,10 +10,12 @@ public class PrinterServer {
                 System.setSecurityManager(new SecurityManager());
             }
             PrinterManager printerManager = new PrinterManagerImple();
-            System.setProperty("java.rmi.server.hostname", "ip-172-31-31-120.ec2.internal");
+            // PrinterManager stubPrinterManager = (PrinterManager) UnicastRemoteObject.exportObject(printerManager, 0);
+
+            System.setProperty("java.rmi.server.hostname", "127.0.0.1");
 
             Registry registry = LocateRegistry.createRegistry(2443);
-            registry.rebind("print_service", printerManager);
+            registry.rebind("PrintService", printerManager);
         } catch (Exception e) {
             e.printStackTrace();
         }

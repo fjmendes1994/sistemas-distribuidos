@@ -17,11 +17,11 @@ public class PrinterClient {
             if(System.getSecurityManager() == null){
                 System.setSecurityManager(new SecurityManager());
             }
-            String serverIP = "ec2-54-172-102-230.compute-1.amazonaws.com"; // or localhost if client and server on same machine.
+            String serverIP = "127.0.0.1"; // or localhost if client and server on same machine.
             int serverPort = 2443;
             Registry registry = LocateRegistry.getRegistry(serverIP, serverPort);
             System.out.println("Achei o Registry");
-            PrinterManager printerManger = (PrinterManager) registry.lookup("print_service");
+            PrinterManager printerManger = (PrinterManager) registry.lookup("PrintService");
             System.out.println("Achei o PrinterManager");
             PrintJob printJob;
             for (int i = 0; i < 10; i++) {
