@@ -110,7 +110,7 @@ void update_centroids(int offset, int points_per_process, Point *points, Cluster
 
 
 // Imprime os centroides dos clusters (mudar para dar print em uma string formada ja com todos os centroid, varios prints ta ficando bagunçado)
-void print_centroids(Cluster *c, int proc_id) {
+void print_centroids(Cluster *c, char* proc_id) {
     printf("Centroides:{proc: %d}\n", proc_id);
 
     for (int i = 0; i < NUM_OF_CLUSTERS; i++) {
