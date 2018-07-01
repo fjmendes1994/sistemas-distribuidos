@@ -114,7 +114,7 @@ void print_centroids(Cluster *c, int proc_id) {
     printf("Centroides:{proc: %d}\n", proc_id);
 
     for (int i = 0; i < NUM_OF_CLUSTERS; i++) {
-        printf("Centroide{proc: %d cluster:%d x: %f , y: %f}", proc_id , i,  c[i].centroid_x, c[i].centroid_y);
+        printf("Centroide{proc: %s cluster:%d x: %f , y: %f}", proc_id , i,  c[i].centroid_x, c[i].centroid_y);
 
         printf("\n");
     }
@@ -187,7 +187,10 @@ int main(int argc, char *argv[]) {
             }
 
             // Imprime os centroides atualizados
-            print_centroids(clusters, proc_id);
+            char processor_name[MPI_MAX_PROCESSOR_NAME];
+            int name_len;
+            MPI_Get_processor_name(processor_name, &name_len);
+            print_centroids(clusters, processor_name);
 
 
         }
@@ -214,7 +217,11 @@ int main(int argc, char *argv[]) {
             MPI_Send(&offset, 1, MPI_INT, dest_proc, offset_tag, MPI_COMM_WORLD);
             MPI_Send(&points[offset], points_per_process, MPI_DOUBLE, dest_proc, points_tag, MPI_COMM_WORLD);
 
-            print_centroids(clusters, proc_id);
+
+            char processor_name[MPI_MAX_PROCESSOR_NAME];
+            int name_len;
+            MPI_Get_processor_name(processor_name, &name_len);
+            print_centroids(clusters, processor_name);
 
 
         }

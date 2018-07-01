@@ -1,8 +1,16 @@
+all: clean build
+
 build:
 	mpicc kmeans-mpi.c -o kmeans
 
-run:
-	mpirun -np 3 kmeans
+run-2:
+	mpirun --allow-run-as-root -np 2 kmeans
+
+run-4:
+	mpirun --allow-run-as-root -np 4 kmeans
+
+run-8:
+	mpirun --allow-run-as-root -np 8 kmeans
 
 clean:
 	rm -f kmeans
