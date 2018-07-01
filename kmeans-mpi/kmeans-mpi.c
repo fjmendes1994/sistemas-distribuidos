@@ -71,7 +71,7 @@ int assign_point(const Point *point, Cluster *clusters) {
 }
 
 // Atualiza os centroides de acordo com o vetor com as somas dos pontos ( entender melhor e modificar )
-void update_centroids(int offset, int points_per_process, Point *points, Cluster *clusters, int cluster_id, int proc_id) {
+void update_centroids(int offset, int points_per_process, Point *points, Cluster *clusters, int cluster_id, char*  proc_id) {
     int itr_points = 0;
     double sum_x, sum_y = 0.0;
     double points_per_cluster = 0.0;
@@ -102,9 +102,9 @@ void update_centroids(int offset, int points_per_process, Point *points, Cluster
     if (centroid_x != clusters[cluster_id].centroid_x || centroid_y != clusters[cluster_id].centroid_y) {
         clusters[cluster_id].centroid_x = centroid_x;
         clusters[cluster_id].centroid_y = centroid_y;
-        printf("Centroide{proc: %d} do cluster %d mudou!\n", proc_id, cluster_id);
+        printf("Centroide{proc: %s} do cluster %d mudou!\n", proc_id, cluster_id);
     } else {
-        printf("Centroide{proc: %d} do cluster %d não sofreu alterações\n", proc_id, cluster_id);
+        printf("Centroide{proc: %s} do cluster %d não sofreu alterações\n", proc_id, cluster_id);
     }
 }
 
@@ -152,6 +152,9 @@ int main(int argc, char *argv[]) {
         // Processo Master (pai de todos)
         if (proc_id == 0) {
             offset = points_per_process;
+            char processor_name[MPI_MAX_PROCESSOR_NAME];
+            int name_len;
+            MPI_Get_processor_name(processor_name, &name_len);
 
 
             //Manda cada parte do vetor para aum processo
@@ -175,7 +178,7 @@ int main(int argc, char *argv[]) {
 
             // Aqui ele atualiza os centroides
             for (int cluster_iterator = 0; cluster_iterator < NUM_OF_CLUSTERS; cluster_iterator++) {
-                update_centroids(offset, points_per_process, points, clusters, cluster_iterator, proc_id);
+                update_centroids(offset, points_per_process, points, clusters, cluster_iterator, processor_name);
             }
 
 
@@ -187,9 +190,6 @@ int main(int argc, char *argv[]) {
             }
 
             // Imprime os centroides atualizados
-            char processor_name[MPI_MAX_PROCESSOR_NAME];
-            int name_len;
-            MPI_Get_processor_name(processor_name, &name_len);
             print_centroids(clusters, processor_name);
 
 
@@ -198,6 +198,9 @@ int main(int argc, char *argv[]) {
         // Processos Slaves
         if (proc_id > 0) {
             source_proc = 0;
+            char processor_name[MPI_MAX_PROCESSOR_NAME];
+            int name_len;
+            MPI_Get_processor_name(processor_name, &name_len);
             // Aqui ele recebe do processo pai a parte do vetor que ele irá processar
             MPI_Recv(&offset, 1, MPI_INT, source_proc, offset_tag, MPI_COMM_WORLD, &status);
             MPI_Recv(&points[offset], points_per_process, MPI_DOUBLE, source_proc, points_tag, MPI_COMM_WORLD, &status);
@@ -209,7 +212,7 @@ int main(int argc, char *argv[]) {
 
             // Atualiza os centroides
             for (int cluster_iterator = 0; cluster_iterator < NUM_OF_CLUSTERS; cluster_iterator++) {
-                update_centroids(offset, points_per_process, points, clusters, cluster_iterator, proc_id);
+                update_centroids(offset, points_per_process, points, clusters, cluster_iterator, processor_name);
             }
 
             dest_proc = 0;
@@ -218,9 +221,6 @@ int main(int argc, char *argv[]) {
             MPI_Send(&points[offset], points_per_process, MPI_DOUBLE, dest_proc, points_tag, MPI_COMM_WORLD);
 
 
-            char processor_name[MPI_MAX_PROCESSOR_NAME];
-            int name_len;
-            MPI_Get_processor_name(processor_name, &name_len);
             print_centroids(clusters, processor_name);
 
 
