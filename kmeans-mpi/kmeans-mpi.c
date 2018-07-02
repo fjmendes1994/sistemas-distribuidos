@@ -18,7 +18,6 @@ typedef struct Cluster {
 } Cluster;
 
 
-const int NUM_OF_POINTS = 120;
 const int NUM_OF_CLUSTERS = 4;
 
 
@@ -121,7 +120,7 @@ void print_centroids(Cluster *c, char* proc_id) {
 }
 
 int main(int argc, char *argv[]) {
-
+    const int NUM_OF_POINTS = atoi(argv[1]);
     int num_proc, proc_id, dest_proc, source_proc, offset, offset_tag, points_tag, points_per_process;
 
     // Inicializa o MPI
