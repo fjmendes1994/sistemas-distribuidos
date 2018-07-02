@@ -28,7 +28,7 @@ run-1000-4:
 	mpirun  -n 4 -host master,node001,node002,node003 ./kmeans 1000
 
 run-1000-8:
-mpirun  -n 8 -host master,node001,node002,node003,node004,node005,node006,node007 ./kmeans 1000
+	mpirun  -n 8 -host master,node001,node002,node003,node004,node005,node006,node007 ./kmeans 1000
 
 clean:
 	rm -f kmeans
