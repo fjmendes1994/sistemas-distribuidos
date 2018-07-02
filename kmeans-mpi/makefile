@@ -1,10 +1,10 @@
 all: clean build
 
 build:
-	mpicc kmeans-mpi.c -o kmeans
+	mpicc -std=c99 kmeans-mpi.c -o kmeans
 
 run-2:
-	mpirun --allow-run-as-root -n 2 -host master,node001 ./kmeans
+	mpirun  -n 2 -host master,node001 ./kmeans
 
 run-4:
 	mpirun --allow-run-as-root -np 4 kmeans
